@@ -1,0 +1,23 @@
+Package: rhesus
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Michael",
+           family = "Beigelmacher",
+           role = c("aut", "cre"),
+           email = "brooklynbagel@gmail.com")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Imports: 
+    dplyr,
+    glue,
+    httr,
+    jsonlite,
+    magrittr,
+    purrr,
+    rlang,
+    tibble,
+    tidyr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.0
