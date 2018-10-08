@@ -13,8 +13,17 @@ survey_questions <- function(id) {
         purrr::map_chr("heading"),
       family = purrr::map_chr(.data$questions, "family"),
       subtype = purrr::map_chr(.data$questions, "subtype"),
-      answers = purrr::map(.data$questions, "answers")
-    )
+      answers = .data$questions %>%
+        purrr::map("answers") %>%
+        purrr::map(function(x) {
+          choices <- dplyr::bind_rows(x$choices)
+          rows <- dplyr::bind_rows(x$rows)
+          list(choices = choices, rows = rows)
+        }),
+      names = purrr::map(.data$answers, names)
+    ) %>%
+    tidyr::unnest(.data$answers, .data$names) %>%
+    tidyr::spread(.data$names, .data$answers)
 
   questions
 }
