@@ -15,7 +15,9 @@ survey_responses <- function(id) {
       question_id = purrr::map_chr(.data$questions, "id"),
       answers = purrr::map(.data$questions, "answers")
     ) %>%
-    dplyr::select(-.data$questions)
+    dplyr::select(-.data$questions) %>%
+    dplyr::mutate(responses = purrr::map(.data$answers, dplyr::bind_rows)) %>%
+    dplyr::select(-.data$answers)
 
   responses
 }
