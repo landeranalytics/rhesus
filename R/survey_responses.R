@@ -19,6 +19,44 @@ survey_responses <- function(id) {
     dplyr::mutate(responses = purrr::map(.data$answers, dplyr::bind_rows)) %>%
     dplyr::select(-.data$answers)
 
+  questions <- survey_questions(id)
+
+  responses <- responses %>%
+    tidyr::nest(-.data$question_id, .key = "responses") %>%
+    dplyr::left_join(questions, by = "question_id")
+
+  responses <- responses %>%
+    dplyr::mutate(
+      args = purrr::transpose(list(
+        responses = .data$responses,
+        choices = .data$choices,
+        rows = .data$rows
+      )),
+      fn = dplyr::case_when(
+        family == "single_choice" ~ list(single_choice),
+        family == "multiple_choice" ~ list(multiple_choice),
+        family == "open_ended" & subtype == "single" ~ list(open_ended_single),
+        family == "open_ended" & subtype == "essay" ~ list(open_ended_essay),
+        family == "open_ended" & subtype == "multi" ~ list(open_ended_multi),
+        family == "matrix" & subtype == "rating" ~ list(matrix_rating),
+        family == "matrix" & subtype == "ranking" ~ list(matrix_ranking),
+        TRUE ~ list(function(x) NULL)
+      )
+    ) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(responses = purrr::invoke_map(.data$fn, x = .data$args)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(responses = purrr::map2(.data$responses, .data$heading, function(df, nm) {
+      df %>%
+        dplyr::rename_at(
+          dplyr::vars(-.data$response_id),
+          ~paste0(nm, "_", .)
+        )
+    }))
+
+  responses <- responses$responses %>%
+    purrr::reduce(dplyr::left_join, by = "response_id")
+
   responses
 }
 
