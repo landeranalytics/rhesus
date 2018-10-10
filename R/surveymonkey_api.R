@@ -15,7 +15,7 @@ surveymonkey_api <- function(path) {
   resp <- httr::GET(
     url,
     httr::add_headers(Authorization = paste("Bearer", surveymonkey_token())),
-    httr::user_agent("https://github.com/brooklynbagel/rhesus")
+    httr::user_agent("https://github.com/landeranalytics/rhesus")
   )
 
   if (httr::http_type(resp) != "application/json") {
