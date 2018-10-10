@@ -1,3 +1,14 @@
+#' survey_responses
+#'
+#' @param id An id for the survey. Can be found using \code{\link{list_surveys}}.
+#'
+#' @return A wide tibble of responses.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' survey_responses(123456789)
+#' }
 survey_responses <- function(id) {
   path <- glue::glue("v3/surveys/{id}/responses/bulk")
   resp <- surveymonkey_api(path)
