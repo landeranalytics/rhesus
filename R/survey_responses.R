@@ -1,6 +1,6 @@
 #' survey_responses
 #'
-#' @param id An id for the survey. Can be found using \code{\link{list_surveys}}.
+#' @param id An id for the survey. Can be found using [list_surveys()].
 #'
 #' @return A wide tibble of responses.
 #' @export

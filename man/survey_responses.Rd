@@ -7,7 +7,7 @@
 survey_responses(id)
 }
 \arguments{
-\item{id}{An id for the survey. Can be found using \code{\link{list_surveys}}.}
+\item{id}{An id for the survey. Can be found using \code{\link[=list_surveys]{list_surveys()}}.}
 }
 \value{
 A wide tibble of responses.
