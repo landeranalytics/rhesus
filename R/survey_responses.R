@@ -71,6 +71,22 @@ survey_responses <- function(id) {
   responses
 }
 
+#' survey_questions
+#'
+#' @param id An id for the survey. Can be found using [list_surveys()].
+#'
+#' @return A tibble of the questions and their details. The following columns are included:
+#' - `question_id` <chr>:  The id of the question.
+#' - `heading` <chr>:  The question name.
+#' - `family` <chr>:  The question family and subtype that define the question type.
+#' - `subtype` <chr>:  The question family and subtype that define the question type.
+#' - `choices` <list>:  A table of choice ids and attributes.
+#' - `rows` <list>:  A table of row ids and attributes.
+#'
+#' @examples
+#' \dontrun{
+#' survey_questions(12345679)
+#' }
 survey_questions <- function(id) {
   path <- glue::glue("v3/surveys/{id}/details")
   resp <- surveymonkey_api(path)
@@ -101,6 +117,13 @@ survey_questions <- function(id) {
   questions
 }
 
+#' single_choice
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>:  Id for the response.
+#' - `text` <chr>:  Text of the option chosen.
 single_choice <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -117,6 +140,14 @@ single_choice <- function(x) {
     dplyr::select(.data$response_id, .data$text)
 }
 
+#' multiple_choice
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>:  Id for the response.
+#' - `<choice name>` <lgl>:  Logical indicating if the choice was selected. One column per choice.
+#' - `text_other` <chr>:  (Optional) Text given an "Other" choice if it exists.
 multiple_choice <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -134,16 +165,37 @@ multiple_choice <- function(x) {
     tidyr::spread(.data$text, .data$selected)
 }
 
+#' open_ended_single
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>: Id for the response.
+#' - `text` <chr>: Text response.
 open_ended_single <- function(x) {
   x$responses %>%
     tidyr::unnest()
 }
 
+#' open_ended_essay
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>: Id for the response.
+#' - `text` <chr>: Text response.
 open_ended_essay <- function(x) {
   x$responses %>%
     tidyr::unnest()
 }
 
+#' open_ended_multi
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>: Id for the response.
+#' - `<row name>` <chr>: Text entered for the row. One column per row.
 open_ended_multi <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -156,6 +208,14 @@ open_ended_multi <- function(x) {
     tidyr::spread(.data$text_row, .data$text_response)
 }
 
+#' matrix_rating
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>: Id for the response.
+#' - `<row name>` <chr>: (If question is a matrix of choices) Text entered for the row. One column per question row.
+#' - `weight>` <int>: (If question is a rating) Rating selected for the response.
 matrix_rating <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -174,6 +234,13 @@ matrix_rating <- function(x) {
   }
 }
 
+#' matrix_ranking
+#'
+#' @param x A named list with `responses`, `choices` and `rows` tibbles.
+#'
+#' @return A tibble with a single row per response and the following structure:
+#' - `response_id` <chr>: Id for the response.
+#' - `<row name>` <int>: Ranking given for the row. One column per question row.
 matrix_ranking <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
