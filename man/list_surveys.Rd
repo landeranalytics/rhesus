@@ -9,10 +9,10 @@ list_surveys()
 \value{
 A tibble listing all the accessible surveys with the following columns:
 \itemize{
-  \item id - Survey identifer.
-  \item title - Survey name.
-  \item href - Survey URL.
-  \item nickname - Survey nickname.
+\item \code{id} <chr>: Survey identifer.
+\item \code{title} <chr>: Survey name.
+\item \code{href} <chr>: - Survey URL.
+\item \code{nickname} <chr>: Survey nickname.
 }
 }
 \description{

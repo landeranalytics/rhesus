@@ -1,12 +1,11 @@
 #' list_surveys
 #'
 #' @return A tibble listing all the accessible surveys with the following columns:
-#' \itemize{
-#'   \item id - Survey identifer.
-#'   \item title - Survey name.
-#'   \item href - Survey URL.
-#'   \item nickname - Survey nickname.
-#' }
+#' - `id` <chr>: Survey identifer.
+#' - `title` <chr>: Survey name.
+#' - `href` <chr>: - Survey URL.
+#' - `nickname` <chr>: Survey nickname.
+#'
 #' @export
 #'
 #' @examples
