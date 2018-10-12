@@ -14,7 +14,7 @@ surveymonkey_api <- function(path) {
 
   resp <- httr::GET(
     url,
-    httr::add_headers(Authorization = paste("Bearer", surveymonkey_token())),
+    config = httr::config(token = surveymonkey_token()),
     httr::user_agent("https://github.com/landeranalytics/rhesus")
   )
 
@@ -49,17 +49,24 @@ print.surveymonkey_api <- function(x, ...) {
   invisible(x)
 }
 
+survemonkey <- httr::oauth_endpoint(
+  request = NULL,
+  authorize = "authorize",
+  access = "token",
+  base_url = "https://api.surveymonkey.com/oauth"
+)
+
+app <- httr::oauth_app(
+  appname = "surveymonkey",
+  key = "9o2PuADKTpOwhiRmZVoZYg",
+  secret = "156353387834082281681050717180649815724"
+)
+
 #' surveymonkey_token
 #'
-#' @return SurveyMonkey access token, if there is one.
+#' @return SurveyMonkey OAuth2 token.
 surveymonkey_token <- function() {
-  token <- Sys.getenv("SURVEYMONKEY_TOKEN")
-
-  if (identical(token, "")) {
-    stop("Please set env var SURVEYMONKEY_TOKEN to your SurveyMonkey access token",
-      call. = FALSE
-    )
-  }
+  token <- httr::oauth2.0_token(survemonkey, app)
 
   token
 }

@@ -7,7 +7,7 @@
 surveymonkey_token()
 }
 \value{
-SurveyMonkey access token, if there is one.
+SurveyMonkey OAuth2 token.
 }
 \description{
 surveymonkey_token
