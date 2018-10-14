@@ -62,11 +62,17 @@ app <- httr::oauth_app(
   secret = "156353387834082281681050717180649815724"
 )
 
+.state <- new.env(parent = emptyenv())
+
 #' surveymonkey_token
 #'
 #' @return SurveyMonkey OAuth2 token.
 surveymonkey_token <- function() {
-  token <- httr::oauth2.0_token(survemonkey, app)
+  token <- .state$token
+  if (is.null(token)) {
+    token <- httr::oauth2.0_token(survemonkey, app)
+    .state$token <- token
+  }
 
   token
 }
