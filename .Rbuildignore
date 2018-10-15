@@ -3,3 +3,4 @@
 ^rhesus\.Rproj$
 ^\.Rproj\.user$
 ^scratchspace$
+^\.httr-oauth$
