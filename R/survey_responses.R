@@ -83,6 +83,8 @@ survey_responses <- function(id) {
 #' - `choices` <list>:  A table of choice ids and attributes.
 #' - `rows` <list>:  A table of row ids and attributes.
 #'
+#' @keywords internal
+#'
 #' @examples
 #' \dontrun{
 #' survey_questions(12345679)
@@ -124,6 +126,7 @@ survey_questions <- function(id) {
 #' @return A tibble with a single row per response and the following structure:
 #' - `response_id` <chr>:  Id for the response.
 #' - `text` <chr>:  Text of the option chosen.
+#' @keywords internal
 single_choice <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -148,6 +151,7 @@ single_choice <- function(x) {
 #' - `response_id` <chr>:  Id for the response.
 #' - `<choice name>` <lgl>:  Logical indicating if the choice was selected. One column per choice.
 #' - `text_other` <chr>:  (Optional) Text given an "Other" choice if it exists.
+#' @keywords internal
 multiple_choice <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -172,6 +176,7 @@ multiple_choice <- function(x) {
 #' @return A tibble with a single row per response and the following structure:
 #' - `response_id` <chr>: Id for the response.
 #' - `text` <chr>: Text response.
+#' @keywords internal
 open_ended_single <- function(x) {
   x$responses %>%
     tidyr::unnest()
@@ -184,6 +189,7 @@ open_ended_single <- function(x) {
 #' @return A tibble with a single row per response and the following structure:
 #' - `response_id` <chr>: Id for the response.
 #' - `text` <chr>: Text response.
+#' @keywords internal
 open_ended_essay <- function(x) {
   x$responses %>%
     tidyr::unnest()
@@ -196,6 +202,7 @@ open_ended_essay <- function(x) {
 #' @return A tibble with a single row per response and the following structure:
 #' - `response_id` <chr>: Id for the response.
 #' - `<row name>` <chr>: Text entered for the row. One column per row.
+#' @keywords internal
 open_ended_multi <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -216,6 +223,7 @@ open_ended_multi <- function(x) {
 #' - `response_id` <chr>: Id for the response.
 #' - `<row name>` <chr>: (If question is a matrix of choices) Text entered for the row. One column per question row.
 #' - `weight>` <int>: (If question is a rating) Rating selected for the response.
+#' @keywords internal
 matrix_rating <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()
@@ -241,6 +249,7 @@ matrix_rating <- function(x) {
 #' @return A tibble with a single row per response and the following structure:
 #' - `response_id` <chr>: Id for the response.
 #' - `<row name>` <int>: Ranking given for the row. One column per question row.
+#' @keywords internal
 matrix_ranking <- function(x) {
   responses <- x$responses %>%
     tidyr::unnest()

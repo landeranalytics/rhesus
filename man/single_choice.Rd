@@ -19,3 +19,4 @@ A tibble with a single row per response and the following structure:
 \description{
 single_choice
 }
+\keyword{internal}
