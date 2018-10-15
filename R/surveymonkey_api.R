@@ -49,6 +49,11 @@ print.surveymonkey_api <- function(x, ...) {
   invisible(x)
 }
 
+#' OAuth endpoints for SurveyMonkey.
+#'
+#' See [httr::oauth_endpoint()] and [SurveyMonkey API developer docs](https://developer.surveymonkey.com/api/v3/#oauth-2-0-flow) for clarification of arguments.
+#'
+#' @keywords internal
 survemonkey <- httr::oauth_endpoint(
   request = NULL,
   authorize = "authorize",
@@ -56,12 +61,20 @@ survemonkey <- httr::oauth_endpoint(
   base_url = "https://api.surveymonkey.com/oauth"
 )
 
+#' OAuth application for SurveyMonkey.
+#'
+#' See [httr::oauth_app()] for clarification of arguments.
+#'
+#' @keywords internal
 app <- httr::oauth_app(
   appname = "surveymonkey",
   key = "9o2PuADKTpOwhiRmZVoZYg",
   secret = "156353387834082281681050717180649815724"
 )
 
+#' Environment to store credentials in.
+#'
+#' @keywords internal
 .state <- new.env(parent = emptyenv())
 
 #' surveymonkey_token
