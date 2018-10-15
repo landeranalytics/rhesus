@@ -129,7 +129,7 @@ survey_questions <- function(id) {
 #' @keywords internal
 single_choice <- function(x) {
   responses <- x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
   if ("text" %in% colnames(responses)) {
     responses <- responses %>%
       dplyr::rename(text_other = .data$text)
@@ -154,7 +154,7 @@ single_choice <- function(x) {
 #' @keywords internal
 multiple_choice <- function(x) {
   responses <- x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
   if ("text" %in% colnames(responses)) {
     responses <- responses %>%
       dplyr::rename(text_other = .data$text)
@@ -179,7 +179,7 @@ multiple_choice <- function(x) {
 #' @keywords internal
 open_ended_single <- function(x) {
   x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
 }
 
 #' open_ended_essay
@@ -192,7 +192,7 @@ open_ended_single <- function(x) {
 #' @keywords internal
 open_ended_essay <- function(x) {
   x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
 }
 
 #' open_ended_multi
@@ -205,7 +205,7 @@ open_ended_essay <- function(x) {
 #' @keywords internal
 open_ended_multi <- function(x) {
   responses <- x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
   rows <- x$rows
   dplyr::left_join(responses, rows,
     by = c("row_id" = "id"),
@@ -226,7 +226,7 @@ open_ended_multi <- function(x) {
 #' @keywords internal
 matrix_rating <- function(x) {
   responses <- x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
   choices <- x$choices
   rows <- x$rows
   if (all(choices$text == "") && all(rows$text == "")) {
@@ -252,7 +252,7 @@ matrix_rating <- function(x) {
 #' @keywords internal
 matrix_ranking <- function(x) {
   responses <- x$responses %>%
-    tidyr::unnest()
+    tidyr::unnest(.data$responses)
   choices <- x$choices
   rows <- x$rows
   responses %>%
