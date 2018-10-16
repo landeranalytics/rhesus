@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_surveys.R
 \name{list_surveys}
 \alias{list_surveys}
-\title{list_surveys}
+\title{Return a table of surveys owned or shared by the user.}
 \usage{
 list_surveys()
 }
@@ -16,7 +16,7 @@ A tibble listing all the accessible surveys with the following columns:
 }
 }
 \description{
-list_surveys
+Return a table of surveys owned or shared by the user.
 }
 \examples{
 \dontrun{

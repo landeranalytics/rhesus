@@ -2,7 +2,7 @@
 % Please edit documentation in R/surveymonkey_api.R
 \name{surveymonkey_api}
 \alias{surveymonkey_api}
-\title{surveymonkey_api}
+\title{Make GET requests to the SurveyMonkey API.}
 \usage{
 surveymonkey_api(path)
 }
@@ -13,7 +13,7 @@ surveymonkey_api(path)
 List representing the JSON response.
 }
 \description{
-surveymonkey_api
+Make GET requests to the SurveyMonkey API.
 }
 \examples{
 \dontrun{

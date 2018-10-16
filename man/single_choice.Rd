@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{single_choice}
 \alias{single_choice}
-\title{single_choice}
+\title{Parse a list of arguments into a \code{single_choice} question response.}
 \usage{
 single_choice(x)
 }
@@ -17,6 +17,6 @@ A tibble with a single row per response and the following structure:
 }
 }
 \description{
-single_choice
+Parse a list of arguments into a \code{single_choice} question response.
 }
 \keyword{internal}

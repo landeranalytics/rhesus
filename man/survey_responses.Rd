@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{survey_responses}
 \alias{survey_responses}
-\title{survey_responses}
+\title{Return a table of responses to a survey.}
 \usage{
 survey_responses(id)
 }
@@ -13,7 +13,10 @@ survey_responses(id)
 A wide tibble of responses.
 }
 \description{
-survey_responses
+Return a tibble of responses to a survey owned or shared by the user. Each
+response has it's own \code{response_id}, and each response is it's own row. This
+makes it a wide table with the column names depending on the question names,
+types and for certain question types the answer options too.
 }
 \examples{
 \dontrun{

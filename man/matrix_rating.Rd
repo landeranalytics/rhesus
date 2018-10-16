@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{matrix_rating}
 \alias{matrix_rating}
-\title{matrix_rating}
+\title{Parse a list of arguments into a \code{matrix_rating} response.}
 \usage{
 matrix_rating(x)
 }
@@ -18,6 +18,6 @@ A tibble with a single row per response and the following structure:
 }
 }
 \description{
-matrix_rating
+Parse a list of arguments into a \code{matrix_rating} response.
 }
 \keyword{internal}

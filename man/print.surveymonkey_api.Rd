@@ -2,7 +2,7 @@
 % Please edit documentation in R/surveymonkey_api.R
 \name{print.surveymonkey_api}
 \alias{print.surveymonkey_api}
-\title{print.surveymonkey_api}
+\title{Print a SurveyMonkey API response object.}
 \usage{
 \method{print}{surveymonkey_api}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{other arguments ignored by this method}
 }
 \description{
-print.surveymonkey_api
+Print a SurveyMonkey API response object.
 }

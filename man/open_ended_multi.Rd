@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{open_ended_multi}
 \alias{open_ended_multi}
-\title{open_ended_multi}
+\title{Parse a list of arguments into a \code{open_ended_multi} response.}
 \usage{
 open_ended_multi(x)
 }
@@ -17,6 +17,6 @@ A tibble with a single row per response and the following structure:
 }
 }
 \description{
-open_ended_multi
+Parse a list of arguments into a \code{open_ended_multi} response.
 }
 \keyword{internal}

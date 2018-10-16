@@ -1,4 +1,4 @@
-#' surveymonkey_api
+#' Make GET requests to the SurveyMonkey API.
 #'
 #' @param path URL path for the SurveyMonkey API.
 #'
@@ -37,7 +37,7 @@ surveymonkey_api <- function(path) {
   )
 }
 
-#' print.surveymonkey_api
+#' Print a SurveyMonkey API response object.
 #'
 #' @param x SurveyMonkey API response object
 #' @param ... other arguments ignored by this method
@@ -51,10 +51,12 @@ print.surveymonkey_api <- function(x, ...) {
 
 #' OAuth endpoints for SurveyMonkey.
 #'
-#' See [httr::oauth_endpoint()] and [SurveyMonkey API developer docs](https://developer.surveymonkey.com/api/v3/#oauth-2-0-flow) for clarification of arguments.
+#' See [httr::oauth_endpoint()] and
+#' [SurveyMonkey API developer docs](https://developer.surveymonkey.com/api/v3/#oauth-2-0-flow)
+#' for more details.
 #'
 #' @keywords internal
-survemonkey <- httr::oauth_endpoint(
+surveymonkey <- httr::oauth_endpoint(
   request = NULL,
   authorize = "authorize",
   access = "token",
@@ -63,7 +65,7 @@ survemonkey <- httr::oauth_endpoint(
 
 #' OAuth application for SurveyMonkey.
 #'
-#' See [httr::oauth_app()] for clarification of arguments.
+#' See [httr::oauth_app()] for more details.
 #'
 #' @keywords internal
 app <- httr::oauth_app(
@@ -77,13 +79,15 @@ app <- httr::oauth_app(
 #' @keywords internal
 .state <- new.env(parent = emptyenv())
 
-#' surveymonkey_token
+#' Return a SurveyMonkey OAuth2 token.
+#'
+#' @keywords internal
 #'
 #' @return SurveyMonkey OAuth2 token.
 surveymonkey_token <- function() {
   token <- .state$token
   if (is.null(token)) {
-    token <- httr::oauth2.0_token(survemonkey, app)
+    token <- httr::oauth2.0_token(surveymonkey, app)
     .state$token <- token
   }
 

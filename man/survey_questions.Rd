@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{survey_questions}
 \alias{survey_questions}
-\title{survey_questions}
+\title{Return a table of questions for a survey.}
 \usage{
 survey_questions(id)
 }
@@ -21,7 +21,12 @@ A tibble of the questions and their details. The following columns are included:
 }
 }
 \description{
-survey_questions
+Return a tibble of questions for a survey owned or shared by the user. There
+is a \code{question_id} used to identify the question and a \code{heading} for
+the question name, as well \code{family} and \code{subtype} which identify the type of
+question. \code{choices} and \code{rows} are two fields (optionally) found in questions
+and and have their own \code{id}s identifying them as well as attributes such as
+\code{text} specifying what the survey taker sees.
 }
 \examples{
 \dontrun{

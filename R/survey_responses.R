@@ -1,4 +1,9 @@
-#' survey_responses
+#' Return a table of responses to a survey.
+#'
+#' Return a tibble of responses to a survey owned or shared by the user. Each
+#' response has it's own `response_id`, and each response is it's own row. This
+#' makes it a wide table with the column names depending on the question names,
+#' types and for certain question types the answer options too.
 #'
 #' @param id An id for the survey. Can be found using [list_surveys()].
 #'
@@ -71,7 +76,14 @@ survey_responses <- function(id) {
   responses
 }
 
-#' survey_questions
+#' Return a table of questions for a survey.
+#'
+#' Return a tibble of questions for a survey owned or shared by the user. There
+#' is a `question_id` used to identify the question and a `heading` for
+#' the question name, as well `family` and `subtype` which identify the type of
+#' question. `choices` and `rows` are two fields (optionally) found in questions
+#' and and have their own `id`s identifying them as well as attributes such as
+#' `text` specifying what the survey taker sees.
 #'
 #' @param id An id for the survey. Can be found using [list_surveys()].
 #'
@@ -119,7 +131,9 @@ survey_questions <- function(id) {
   questions
 }
 
-#' single_choice
+#' Parse a list of arguments into a `single_choice` question response.
+#'
+#'
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'
@@ -143,7 +157,7 @@ single_choice <- function(x) {
     dplyr::select(.data$response_id, .data$text)
 }
 
-#' multiple_choice
+#' Parse a list of arguments into a `multiple_choice` response.
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'
@@ -169,7 +183,7 @@ multiple_choice <- function(x) {
     tidyr::spread(.data$text, .data$selected)
 }
 
-#' open_ended_single
+#' Parse a list of arguments into a `open_ended_single` response.
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'
@@ -182,7 +196,7 @@ open_ended_single <- function(x) {
     tidyr::unnest(.data$responses)
 }
 
-#' open_ended_essay
+#' Parse a list of arguments into a `open_ended_essay` response.
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'
@@ -195,7 +209,7 @@ open_ended_essay <- function(x) {
     tidyr::unnest(.data$responses)
 }
 
-#' open_ended_multi
+#' Parse a list of arguments into a `open_ended_multi` response.
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'
@@ -215,7 +229,7 @@ open_ended_multi <- function(x) {
     tidyr::spread(.data$text_row, .data$text_response)
 }
 
-#' matrix_rating
+#' Parse a list of arguments into a `matrix_rating` response.
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'
@@ -242,7 +256,7 @@ matrix_rating <- function(x) {
   }
 }
 
-#' matrix_ranking
+#' Parse a list of arguments into a `matrix_ranking` response.
 #'
 #' @param x A named list with `responses`, `choices` and `rows` tibbles.
 #'

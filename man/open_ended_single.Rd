@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{open_ended_single}
 \alias{open_ended_single}
-\title{open_ended_single}
+\title{Parse a list of arguments into a \code{open_ended_single} response.}
 \usage{
 open_ended_single(x)
 }
@@ -17,6 +17,6 @@ A tibble with a single row per response and the following structure:
 }
 }
 \description{
-open_ended_single
+Parse a list of arguments into a \code{open_ended_single} response.
 }
 \keyword{internal}

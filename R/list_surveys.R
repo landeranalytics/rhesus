@@ -1,4 +1,4 @@
-#' list_surveys
+#' Return a table of surveys owned or shared by the user.
 #'
 #' @return A tibble listing all the accessible surveys with the following columns:
 #' - `id` <chr>: Survey identifer.

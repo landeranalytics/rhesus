@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey_responses.R
 \name{multiple_choice}
 \alias{multiple_choice}
-\title{multiple_choice}
+\title{Parse a list of arguments into a \code{multiple_choice} response.}
 \usage{
 multiple_choice(x)
 }
@@ -18,6 +18,6 @@ A tibble with a single row per response and the following structure:
 }
 }
 \description{
-multiple_choice
+Parse a list of arguments into a \code{multiple_choice} response.
 }
 \keyword{internal}

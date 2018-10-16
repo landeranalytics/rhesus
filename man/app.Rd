@@ -9,6 +9,6 @@
 app
 }
 \description{
-See \code{\link[httr:oauth_app]{httr::oauth_app()}} for clarification of arguments.
+See \code{\link[httr:oauth_app]{httr::oauth_app()}} for more details.
 }
 \keyword{internal}

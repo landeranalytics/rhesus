@@ -2,7 +2,7 @@
 % Please edit documentation in R/surveymonkey_api.R
 \name{surveymonkey_token}
 \alias{surveymonkey_token}
-\title{surveymonkey_token}
+\title{Return a SurveyMonkey OAuth2 token.}
 \usage{
 surveymonkey_token()
 }
@@ -10,5 +10,6 @@ surveymonkey_token()
 SurveyMonkey OAuth2 token.
 }
 \description{
-surveymonkey_token
+Return a SurveyMonkey OAuth2 token.
 }
+\keyword{internal}
