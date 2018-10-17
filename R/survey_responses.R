@@ -167,20 +167,18 @@ single_choice <- function(x) {
 #' - `text_other` <chr>:  (Optional) Text given an "Other" choice if it exists.
 #' @keywords internal
 multiple_choice <- function(x) {
-  responses <- x$responses %>%
-    tidyr::unnest(.data$responses)
-  if ("text" %in% colnames(responses)) {
-    responses <- responses %>%
-      dplyr::rename(text_other = .data$text)
-  } else {
-    responses <- responses %>%
-      tibble::add_column(text_other = NA_character_)
-  }
   choices <- x$choices
-  dplyr::left_join(responses, choices, by = c("choice_id" = "id")) %>%
-    dplyr::select(.data$response_id, .data$text, .data$text_other) %>%
+
+  responses <- x$responses %>%
+    tidyr::unnest(.data$responses) %>%
+    dplyr::select(.data$response_id, .data$choice_id)
+
+  responses <- dplyr::left_join(responses, choices, by = c("choice_id" = "id")) %>%
+    dplyr::select(.data$response_id, .data$text) %>%
     tibble::add_column(selected = TRUE) %>%
     tidyr::spread(.data$text, .data$selected)
+
+  responses
 }
 
 #' Parse a list of arguments into a `open_ended_single` response.
