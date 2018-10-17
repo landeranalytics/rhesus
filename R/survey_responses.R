@@ -176,7 +176,7 @@ multiple_choice <- function(x) {
   responses <- dplyr::left_join(responses, choices, by = c("choice_id" = "id")) %>%
     dplyr::select(.data$response_id, .data$text) %>%
     tibble::add_column(selected = TRUE) %>%
-    tidyr::spread(.data$text, .data$selected)
+    tidyr::spread(.data$text, .data$selected, fill = FALSE)
 
   responses
 }

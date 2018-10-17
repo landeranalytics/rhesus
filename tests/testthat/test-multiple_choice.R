@@ -13,3 +13,11 @@ test_that("multiple_choice returns a single row per response", {
   expect_true(all_unique(output2$response_id))
   expect_true(all_unique(output3$response_id))
 })
+
+test_that("multiple_choice does fills unselected choices", {
+  no_nas <- function(x) all(!is.na(x))
+
+  expect_true(no_nas(output1))
+  expect_true(no_nas(output2))
+  expect_true(no_nas(output3))
+})
