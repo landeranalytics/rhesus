@@ -6,6 +6,12 @@ output1 <- multiple_choice(input1)
 output2 <- multiple_choice(input2)
 output3 <- multiple_choice(input3)
 
+test_that("multiple_choice returns a tibble", {
+  expect_s3_class(output1, c("data.frame", "tbl", "tbl.df"))
+  expect_s3_class(output2, c("data.frame", "tbl", "tbl.df"))
+  expect_s3_class(output3, c("data.frame", "tbl", "tbl.df"))
+})
+
 test_that("multiple_choice returns a single row per response", {
   all_unique <- function(x) all(table(x) == 1L)
 
