@@ -1,6 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![Travis build
+status](https://travis-ci.com/landeranalytics/rhesus.svg?branch=master)](https://travis-ci.com/landeranalytics/rhesus)
+
 # rhesus
 
 The `rhesus` package is for reading survey data from
