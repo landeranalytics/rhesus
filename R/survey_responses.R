@@ -171,12 +171,24 @@ multiple_choice <- function(x) {
 
   responses <- x$responses %>%
     tidyr::unnest(.data$responses) %>%
-    dplyr::select(.data$response_id, .data$choice_id)
+    dplyr::select(.data$response_id, .data$choice_id) %>%
+    dplyr::filter(!is.na(.data$choice_id))
 
   responses <- dplyr::left_join(responses, choices, by = c("choice_id" = "id")) %>%
     dplyr::select(.data$response_id, .data$text) %>%
     tibble::add_column(selected = TRUE) %>%
     tidyr::spread(.data$text, .data$selected, fill = FALSE)
+
+  missing_cols <- setdiff(choices$text, names(responses))
+  if (length(missing_cols) > 0) {
+    missing_cols <- matrix(
+      data = FALSE,
+      nrow = nrow(responses), ncol = length(missing_cols)
+    ) %>%
+      magrittr::set_colnames(missing_cols) %>%
+      tibble::as_tibble()
+    responses <- dplyr::bind_cols(responses, missing_cols)
+  }
 
   responses
 }
