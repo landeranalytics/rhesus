@@ -22,10 +22,10 @@ test_that("multiple_choice does fills unselected choices", {
   expect_true(no_nas(output3))
 })
 
-test_that("multiple_choice has a column for all possible choices", {
+test_that("multiple_choice has a column for all possible choices and optional text_other", {
   names <- c("response_id", "Apples", "Bananas", "Chocolate")
 
   expect_named(output1, names, ignore.order = TRUE)
   expect_named(output2, names, ignore.order = TRUE)
-  expect_named(output3, names, ignore.order = TRUE)
+  expect_named(output3, c(names, "text_other"), ignore.order = TRUE)
 })

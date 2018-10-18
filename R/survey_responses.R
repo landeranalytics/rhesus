@@ -169,10 +169,18 @@ single_choice <- function(x) {
 multiple_choice <- function(x) {
   choices <- x$choices
 
-  responses <- x$responses %>%
-    tidyr::unnest(.data$responses) %>%
-    dplyr::select(.data$response_id, .data$choice_id) %>%
-    dplyr::filter(!is.na(.data$choice_id))
+  responses <- tidyr::unnest(x$responses, .data$responses)
+  other_responses <- NULL
+
+  if ("text" %in% names(responses)) {
+    other_responses <- responses %>%
+      dplyr::select(.data$response_id, .data$text) %>%
+      dplyr::rename(text_other = .data$text) %>%
+      tidyr::drop_na()
+    responses <- responses %>%
+      dplyr::select(.data$response_id, .data$choice_id) %>%
+      tidyr::drop_na()
+  }
 
   responses <- dplyr::left_join(responses, choices, by = c("choice_id" = "id")) %>%
     dplyr::select(.data$response_id, .data$text) %>%
@@ -188,6 +196,12 @@ multiple_choice <- function(x) {
       magrittr::set_colnames(missing_cols) %>%
       tibble::as_tibble()
     responses <- dplyr::bind_cols(responses, missing_cols)
+  }
+
+  if (!is.null(other_responses)) {
+    responses <- responses %>%
+      dplyr::left_join(other_responses, by = "response_id") %>%
+      tidyr::replace_na(list(text_other = ""))
   }
 
   responses
