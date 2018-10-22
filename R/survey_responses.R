@@ -263,26 +263,31 @@ open_ended_multi <- function(x) {
 #' - `weight>` <int>: (If question is a rating) Rating selected for the response.
 #' @keywords internal
 matrix_rating <- function(x) {
-  responses <- x$responses %>%
-    tidyr::unnest(.data$responses)
   choices <- x$choices
   rows <- x$rows
-  if (all(choices$text == "") && all(rows$text == "")) {
-    responses %>%
-      dplyr::left_join(choices, by = c("choice_id" = "id")) %>%
-      dplyr::select(.data$response_id, .data$weight)
-  } else {
-    responses %>%
-      dplyr::left_join(choices, by = c("choice_id" = "id")) %>%
-      dplyr::left_join(rows, by = c("row_id" = "id"), suffix = c("_choice", "_row")) %>%
-      dplyr::mutate(
-        text_row = .data$text_row %>%
-          factor(ordered = TRUE) %>%
-          forcats::fct_reorder(.data$position_row)
-      ) %>%
-      dplyr::select(.data$response_id, .data$text_choice, .data$text_row) %>%
-      tidyr::spread(.data$text_row, .data$text_choice)
+
+  responses <- tidyr::unnest(x$responses, .data$responses)
+
+  responses <- dplyr::left_join(responses, choices, by = c("choice_id" = "id"))
+  if ("weight" %in% names(responses)) {
+    responses <- dplyr::mutate(responses,
+      text = .data$text %>%
+        factor(ordered = TRUE) %>%
+        forcats::fct_reorder(.data$weight)
+    )
   }
+
+  responses <- responses %>%
+    dplyr::left_join(rows, by = c("row_id" = "id"), suffix = c("_choice", "_row")) %>%
+    dplyr::mutate(
+      text_row = .data$text_row %>%
+        factor(ordered = TRUE) %>%
+        forcats::fct_reorder(.data$position_row)
+    ) %>%
+    dplyr::select(.data$response_id, .data$text_choice, .data$text_row) %>%
+    tidyr::spread(.data$text_row, .data$text_choice)
+
+  responses
 }
 
 #' Parse a list of arguments into a `matrix_ranking` response.

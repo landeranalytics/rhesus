@@ -39,3 +39,17 @@ test_that("matrix_rating preserves ordering of rows", {
   df <- matrix_rating(x)
   expect_named(df[-1], c("best", "okay", "meh"))
 })
+
+test_that("if `weight` is present in `choices`, matrix_rating returns ordered factors", {
+  choices <- add_column(choices, weight = 1:3)
+  x <- lst(responses, choices, rows)
+  df <- matrix_rating(x)
+
+  expect_s3_class(df$best, c("ordered", "factor"))
+  expect_s3_class(df$okay, c("ordered", "factor"))
+  expect_s3_class(df$meh, c("ordered", "factor"))
+
+  expect_levels(df$best, c("sushi", "pizza", "noodles"))
+  expect_levels(df$okay, c("sushi", "pizza", "noodles"))
+  expect_levels(df$meh, c("sushi", "pizza", "noodles"))
+})
