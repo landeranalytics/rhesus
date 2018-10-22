@@ -267,6 +267,17 @@ matrix_rating <- function(x) {
   rows <- x$rows
 
   responses <- tidyr::unnest(x$responses, .data$responses)
+  other_responses <- NULL
+
+  if ("text" %in% names(responses)) {
+  other_responses <- responses %>%
+    dplyr::select(.data$response_id, .data$text) %>%
+    dplyr::rename(text_other = .data$text) %>%
+    tidyr::drop_na()
+  responses <- responses %>%
+    dplyr::select(.data$response_id, .data$choice_id, .data$row_id) %>%
+    tidyr::drop_na()
+  }
 
   responses <- dplyr::left_join(responses, choices, by = c("choice_id" = "id"))
   if ("weight" %in% names(responses)) {
@@ -286,6 +297,12 @@ matrix_rating <- function(x) {
     ) %>%
     dplyr::select(.data$response_id, .data$text_choice, .data$text_row) %>%
     tidyr::spread(.data$text_row, .data$text_choice)
+
+  if (!is.null(other_responses)) {
+    responses <- responses %>%
+      dplyr::left_join(other_responses, by = "response_id") %>%
+      tidyr::replace_na(list(text_other = ""))
+  }
 
   responses
 }

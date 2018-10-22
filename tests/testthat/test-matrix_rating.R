@@ -60,3 +60,13 @@ test_that("if `weight` is not present in `choices`, matrix_rating returns charac
   expect_type(df$okay, "character")
   expect_type(df$meh, "character")
 })
+
+test_that("matrix_rating returns a `text_other` column for an 'Other' choice if it exists", {
+  x$responses$responses[[2]] <- dplyr::bind_rows(
+    x$responses$responses[[2]],
+    list(text = "The Other", other_id = "965")
+  )
+  df <- matrix_rating(x)
+
+  expect_true("text_other" %in% names(df))
+})
