@@ -33,3 +33,9 @@ test_that("matrix_rating returns a tibble", {
   x <- lst(responses, choices, rows)
   expect_s3_class(matrix_rating(x), c("data.frame", "tbl", "tbl.df"))
 })
+
+test_that("matrix_rating preserves ordering of rows", {
+  x <- lst(responses, choices, rows)
+  df <- matrix_rating(x)
+  expect_named(df[-1], c("best", "okay", "meh"))
+})

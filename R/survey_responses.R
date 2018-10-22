@@ -275,6 +275,11 @@ matrix_rating <- function(x) {
     responses %>%
       dplyr::left_join(choices, by = c("choice_id" = "id")) %>%
       dplyr::left_join(rows, by = c("row_id" = "id"), suffix = c("_choice", "_row")) %>%
+      dplyr::mutate(
+        text_row = .data$text_row %>%
+          factor(ordered = TRUE) %>%
+          forcats::fct_reorder(.data$position_row)
+      ) %>%
       dplyr::select(.data$response_id, .data$text_choice, .data$text_row) %>%
       tidyr::spread(.data$text_row, .data$text_choice)
   }
