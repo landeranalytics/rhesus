@@ -4,10 +4,10 @@ context("test-matrix_rating")
 library(tibble)
 
 choices <- tribble(
-  ~ description, ~ id,  ~ visible, ~ is_na, ~ text,    ~ position,
-  "",            "684", TRUE,      FALSE,   "sushi",   1L,
-  "",            "685", TRUE,      FALSE,   "pizza",   2L,
-  "",            "686", TRUE,      FALSE,   "noodles", 3L
+  ~ description, ~ weight, ~ id,  ~ visible, ~ is_na, ~ text,    ~ position,
+  "",            1L,       "684", TRUE,      FALSE,   "sushi",   1L,
+  "",            2L,       "685", TRUE,      FALSE,   "pizza",   2L,
+  "",            3L,       "686", TRUE,      FALSE,   "noodles", 3L
 )
 
 rows <- tribble(
@@ -29,20 +29,18 @@ responses_unnested <- tribble(
 )
 responses <- tidyr::nest(responses_unnested, -response_id, .key = "responses")
 
+x <- list(responses = responses, choices = choices, rows = rows)
+
 test_that("matrix_rating returns a tibble", {
-  x <- lst(responses, choices, rows)
   expect_s3_class(matrix_rating(x), c("data.frame", "tbl", "tbl.df"))
 })
 
 test_that("matrix_rating preserves ordering of rows", {
-  x <- lst(responses, choices, rows)
   df <- matrix_rating(x)
   expect_named(df[-1], c("best", "okay", "meh"))
 })
 
 test_that("if `weight` is present in `choices`, matrix_rating returns ordered factors", {
-  choices <- add_column(choices, weight = 1:3)
-  x <- lst(responses, choices, rows)
   df <- matrix_rating(x)
 
   expect_s3_class(df$best, c("ordered", "factor"))
@@ -52,4 +50,13 @@ test_that("if `weight` is present in `choices`, matrix_rating returns ordered fa
   expect_levels(df$best, c("sushi", "pizza", "noodles"))
   expect_levels(df$okay, c("sushi", "pizza", "noodles"))
   expect_levels(df$meh, c("sushi", "pizza", "noodles"))
+})
+
+test_that("if `weight` is not present in `choices`, matrix_rating returns characters", {
+  x$choices <- dplyr::select(x$choices, -weight)
+  df <- matrix_rating(x)
+
+  expect_type(df$best, "character")
+  expect_type(df$okay, "character")
+  expect_type(df$meh, "character")
 })
