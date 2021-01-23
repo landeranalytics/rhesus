@@ -1,13 +1,12 @@
 Package: rhesus
-Title: What the Package Does (One Line, Title Case)
+Title: Read Survey Data From SurveyMonkey
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Michael",
+           family = "Beigelmacher",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "brooklynbagel@gmail.com")
+Description: Read in responses from surveys hosted on SurveyMonkey into R.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
