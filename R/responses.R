@@ -21,4 +21,6 @@ sm_responses <- function(survey_id) {
     tidyr::unnest(.data$questions) %>%
     tidyr::hoist(.data$questions, question_id = "id", "answers") %>%
     tidyr::nest(responses = c(.data$response_id, .data$answers))
+
+  responses
 }

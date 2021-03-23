@@ -18,4 +18,6 @@ sm_questions <- function(survey_id) {
     tidyr::unnest(.data$questions) %>%
     tidyr::hoist(.data$questions, question_id = "id", heading = list("headings", 1, "heading"), "family", "answers") %>%
     dplyr::select(-.data$questions)
+
+  questions
 }
